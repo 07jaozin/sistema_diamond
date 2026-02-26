@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordem de Serviço - Diamond Automação</title>
+    <!-- Google Fonts para tipografia moderna -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset básico para consistência */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: #000;
+            background-color: #fff;
+            line-height: 1.6;
+            font-size: 14px;
+            margin: 20px;
+        }
+
+        /* Layout principal otimizado para A4 (aprox. 210mm x 297mm) */
+        .container {
+            max-width: 800px; /* Ajuste para simular A4 em tela */
+            margin: 0 auto;
+            
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Sombra sutil para elegância */
+            border-radius: 8px; /* Bordas arredondadas leves */
+        }
+
+        /* Cabeçalho moderno */
+        .header {
+            display: flex;
+            
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            padding: 30px;
+            border-bottom: 2px solid #000; /* Linha fina preta para destaque */
+            background: linear-gradient(to right, #000000, #696363);
+            color: #eee;
+        }
+
+        .logo {
+            width: 120px; /* Espaço reservado para logo, maior para impacto */
+            height: 120px;
+            background-color: #f8f8f8; /* Cinza muito claro */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #666;
+            border: 1px dashed #ccc;
+            border-radius: 8px;
+        }
+
+        .company-info {
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .company-name {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: 1px; /* Espaçamento para modernidade */
+        }
+
+        .title {
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .os-details {
+            display: flex;
+            flex-direction: column;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .os-details div {
+            margin-bottom: 5px;
+        }
+
+        /* Seções com design limpo */
+        .section {
+            margin-bottom: 35px;
+            padding: 20px;
+            background-color: #fafafa; /* Fundo cinza muito sutil para seções */
+            border-radius: 6px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05); /* Sombra interna leve */
+        }
+
+        .section h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Campos como texto estático para layout */
+        .field {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .field .label {
+            width: 180px;
+            font-weight: 600;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .field .value {
+            flex-grow: 1;
+            font-size: 13px;
+            color: #555;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee; /* Linha sutil para separação */
+        }
+
+        /* Tabela moderna */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 13px;
+        }
+
+        .table th,
+        .table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .table th {
+            background-color: #f0f0f0; /* Cinza claro */
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .table tbody tr:nth-child(even) {
+            background-color: #f9f9f9; /* Alternância sutil */
+        }
+
+        /* Observações como bloco de texto */
+        .observations {
+            font-size: 13px;
+            color: #555;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+            border-left: 4px solid #000; /* Barra lateral preta para destaque */
+        }
+
+        /* Assinatura elegante */
+        .signature {
+            margin-top: 25px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .signature-field {
+            width: 45%;
+        }
+
+        .signature-field .label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .signature-canvas {
+            border: 1px solid #ccc;
+            width: 100%;
+            height: 80px;
+            background-color: #fefefe;
+            border-radius: 4px;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Ícones sutis (usando SVG inline para modernidade) */
+        .icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            fill: #000;
+        }
+
+        /* Responsividade básica */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .os-details {
+                align-items: center;
+            }
+            .field {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .field .label {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+            .signature {
+                flex-direction: column;
+            }
+            .signature-field {
+                width: 100%;
+                margin-bottom: 15px;
+            }
+        }
+
+        /* Estilos para impressão (PDF) */
+        @media print {
+            body {
+                margin: 0;
+                font-size: 12px;
+            }
+            .container {
+                max-width: none;
+                box-shadow: none;
+                border-radius: 0;
+                padding: 20px;
+            }
+            .logo {
+                background-color: #fff;
+            }
+            .section {
+                background-color: #fff;
+                box-shadow: none;
+                padding: 15px;
+            }
+            .table th,
+            .table td {
+                border: 1px solid #000;
+            }
+            .signature-canvas {
+                border: 1px solid #000;
+            }
+            .observations {
+                background-color: #fff;
+                border-left: 4px solid #000;
+            }
+            /* Quebrar páginas se necessário */
+            .section {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Cabeçalho -->
+        <div class="header">
+            
+                <img src="https://res.cloudinary.com/dcdfpnnyp/image/upload/v1770139865/Sem_t%C3%ADtulo-removebg-preview_tmvrmd.png" alt="Logo Diamond Automação"> 
+               
+        
+            <div class="company-info">
+                
+                
+            </div>
+            <div class="os-details">
+                <div><strong>Número da OS:</strong> OS-001</div>
+                <div><strong>Data de Emissão:</strong>{{ $json.data_hoje }}</div>
+            </div>
+        </div>
+
+        <!-- Dados do Cliente -->
+        <div class="section">
+            <h2>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 1H5C3.89 1 3 1.89 3 3V21C3 22.11 3.89 23 5 23H19C20.11 23 21 22.11 21 21V9M19 9H14V4H19V9Z"/></svg>
+                Dados do Cliente
+            </h2>
+            <div class="field">
+                <div class="label">Nome:</div>
+                <div class="value">{{ $('Organizar dados do formulario').item.json.body.dados }}</div>
+            </div>
+            <div class="field">
+                <div class="label">Telefone:</div>
+                <div class="value">(11) 99999-9999</div>
+            </div>
+            <div class="field">
+                <div class="label">E-mail:</div>
+                <div class="value">joao.silva@email.com</div>
+            </div>
+        </div>
+
+        <!-- Endereço do Cliente -->
+        <div class="section">
+            <h2>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22S19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9S10.62 6.5 12 6.5 14.5 7.62 14.5 9 13.38 11.5 12 11.5Z"/></svg>
+                Endereço do Cliente
+            </h2>
+            <div class="field">
+                <div class="label">Endereço:</div>
+                <div class="value">Rua das Flores</div>
+            </div>
+            <div class="field">
+                <div class="label">Número:</div>
+                <div class="value">123</div>
+            </div>
+            <div class="field">
+                <div class="label">Condomínio:</div>
+                <div class="value">Residencial Primavera</div>
+            </div>
+            <div class="field">
+                <div class="label">Quadra:</div>
+                <div class="value">A</div>
+            </div>
+            <div class="field">
+                <div class="label">Lote:</div>
+                <div class="value">10</div>
+            </div>
+            <div class="field">
+                <div class="label">Cidade:</div>
+                <div class="value">São Paulo</div>
+            </div>
+            <div class="field">
+                <div class="label">Estado:</div>
+                <div class="value">SP</div>
+            </div>
+        </div>
+
+        <!-- Dados do Serviço -->
+        <div class="section">
+            <h2>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M12 2L13.09 8.26L19 9L13.09 9.74L12 16L10.91 9.74L5 9L10.91 8.26L12 2Z"/></svg>
+                Dados do Serviço
+            </h2>
+            <div class="field">
+                <div class="label">Data de Execução:</div>
+                <div class="value">00/00/0000</div>
+            </div>
+            <div class="field">
+                <div class="label">Tipo de Serviço:</div>
+                <div class="value">{{ $('AI Agent1').item.json.output.tipo_servico }}</div>
+            </div>
+            <div class="field">
+                <div class="label">Descrição:</div>
+                <div class="value">{{ $('AI Agent1').item.json.output.descricao_servico }}</div>
+            </div>
+        </div>
+
+        <!-- Dispositivos / Materiais -->
+        <div class="section">
+            <h2>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M7 4V2C7 1.45 7.45 1 8 1H16C16.55 1 17 1.45 17 2V4H20C20.55 4 21 4.45 21 5S20.55 6 20 6H19V19C19 20.1 18.1 21 17 21H7C5.9 21 5 20.1 5 19V6H4C3.45 6 3 5.55 3 5S3.45 4 4 4H7ZM9 3V4H15V3H9ZM7 6V19H17V6H7Z"/></svg>
+                Dispositivos / Materiais
+            </h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Descrição</th>
+                        <th>Quantidade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Sensor de Movimento</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Controlador Central</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Cabos de Conexão</td>
+                        <td>10m</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Observações -->
+        <div class="section">
+            <h2>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 11H7V9H9V11ZM13 11H11V9H13V11ZM17 11H15V9H17V11ZM3 7V21H21V7H3ZM19 19H5V9H19V19Z"/></svg>
+                Observações
+            </h2>
+            <div class="observations">
+               {{ $('AI Agent1').item.json.output.observacoes_tecnicas }}
+            </div>
+        </div>
+
+        <!-- Campos Adicionais -->
+        <div class="section">
+            <h2>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M12 2L13.09 8.26L19 9L13.09 9.74L12 16L10.91 9.74L5 9L10.91 8.26L12 2Z"/></svg>
+                Informações Adicionais
+            </h2>
+            <div class="field">
+                <div class="label">Status da OS:</div>
+                <div class="value">Pendente</div>
+            </div>
+            <div class="field">
+                <div class="label">Prioridade:</div>
+                <div class="value">Alta</div>
+            </div>
+            <div class="field">
+                <div class="label">Importante considerar:</div>
+                <div class="value">{{ $('AI Agent1').item.json.output.escopo_considerado }}</div>
+            </div>
+        </div>
+
+        <!-- Responsável Técnica -->
+        <div class="section">
+            <h2>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M12 12C10.9 12 10 11.1 10 10S10.9 8 12 8 14 8.9 14 10 13.1 12 12 12ZM12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22S19 14.25 19 9C19 5.13 15.87 2 12 2Z"/></svg>
+                Responsável Técnica
+            </h2>
+            <div class="field">
+                <div class="label">Nome:</div>
+                <div class="value">Maria Oliveira</div>
+            </div>
+            <div class="field">
+                <div class="label">Cargo:</div>
+                <div class="value">Técnica Especialista</div>
+            </div>
+            <div class="signature">
+                <div class="signature-field">
+                    <div class="label">Assinatura:</div>
+                    <div class="signature-canvas"></div>
+                </div>
+                <div class="signature-field">
+                    <div class="label">Data:</div>
+                    <div class="value">01/10/2023</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirmação de Ciência do Cliente -->
+        <div class="section">
+            <h2>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 11H7V9H9V11ZM13 11H11V9H13V11ZM17 11H15V9H17V11ZM3 7V21H21V7H3ZM19 19H5V9H19V19Z"/></svg>
+                Confirmação de Ciência do Cliente
+            </h2>
+            <div class="signature">
+                <div class="signature-field">
+                    <div class="label">Assinatura do Cliente:</div>
+                    <div class="signature-canvas"></div>
+                </div>
+                <div class="signature-field">
+                    <div class="label">Data:</div>
+                    <div class="value">01/10/2023</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>>
