@@ -36,7 +36,8 @@ const ReportForm = () => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
 
-  const [cliente, setCliente] = useState("");
+  const [numero_os, setNumero_os] = useState("");
+  const [IDObra, setIDObra] = useState("");
   const [equipe, setEquipe] = useState<string[]>([]);
   const [dataExecucao, setDataExecucao] = useState("");
   const [cidade, setCidade] = useState("");
@@ -55,7 +56,8 @@ const ReportForm = () => {
 
   const validate = (): boolean => {
     const newErrors: FormErrors = {};
-    if (!cliente.trim()) newErrors.cliente = "Campo obrigatório";
+    if (!numero_os.trim()) newErrors.numero_os = "Campo obrigatório";
+    if (!IDObra.trim()) newErrors.IDObra = "Campo obrigatório";
     if (equipe.length === 0) newErrors.equipe = "Selecione pelo menos um membro";
     if (!dataExecucao) newErrors.dataExecucao = "Campo obrigatório";
     if (!cidade) newErrors.cidade = "Selecione uma cidade";
@@ -74,7 +76,8 @@ const ReportForm = () => {
     setLoading(true);
     try {
       const dados: RelatorioData = {
-        cliente,
+        numero_os,
+        IDObra,
         equipe,
         data_execucao: dataExecucao,
         cidade,
@@ -85,7 +88,7 @@ const ReportForm = () => {
         anexos,
       };
       await enviarRelatorio(dados);
-      setSubmitted(true);
+      //setSubmitted(true);
     } catch {
       setErrors({ form: "Erro ao enviar relatório. Tente novamente." });
     } finally {
@@ -94,7 +97,8 @@ const ReportForm = () => {
   };
 
   const resetForm = () => {
-    setCliente("");
+    setIDObra("");
+    setNumero_os("");
     setEquipe([]);
     setDataExecucao("");
     setCidade("");
@@ -153,20 +157,35 @@ const ReportForm = () => {
               {errors.form}
             </div>
           )}
-
-          {/* Cliente */}
-          <FieldWrapper label="Cliente" icon={<User className="w-4 h-4" />} error={errors.cliente}>
-            <input
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <FieldWrapper label="Numero da OS" icon={<Calendar className="w-4 h-4" />} error={errors.numero_os}>
+              <input
               type="text"
-              value={cliente}
+              value={numero_os}
               onChange={(e) => {
-                setCliente(e.target.value);
-                clearError("cliente");
+                setNumero_os(e.target.value);
+                clearError("numero os");
               }}
-              placeholder="Nome do cliente"
+              placeholder="Numero da OS"
               className="form-input"
             />
-          </FieldWrapper>
+            </FieldWrapper>
+
+            <FieldWrapper label="ID da Obra" icon={<User className="w-4 h-4" />} error={errors.IDObra}>
+              <input
+                type="text"
+                value={IDObra}
+                onChange={(e) => {
+                  setIDObra(e.target.value);
+                  clearError("ID da Obra");
+                }}
+                placeholder="ID da Obra"
+                className="form-input"
+            />
+            </FieldWrapper>
+          </div>
+
+          
 
           {/* Equipe */}
           <FieldWrapper label="Equipe que executou o serviço" icon={<Users className="w-4 h-4" />} error={errors.equipe}>

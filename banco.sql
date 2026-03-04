@@ -9,7 +9,41 @@ CREATE TABLE funcionarios (
     ativo BOOLEAN DEFAULT TRUE,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     
-  
+);
+
+CREATE TABLE tipos_carro (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    descricao VARCHAR(50) NOT NULL UNIQUE
+);
+
+INSERT INTO tipos_carro (descricao) VALUES 
+('empresa'),
+('aluguel');
+
+CREATE TABLE carros (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    modelo VARCHAR(150) NOT NULL,
+    cor VARCHAR(150) NOT NULL,
+    placa VARCHAR(10) NOT NULL UNIQUE,
+    ativo BOOLEAN NOT NULL DEFAULT TRUE,
+    tipo_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_carros_tipo 
+        FOREIGN KEY (tipo_id) REFERENCES tipos_carro(id)
+);
+INSERT INTO carros(modelo, cor, placa, ativo, tipo_id) VALUES
+('Mobi', 'Branco', '12345-5667', true, 1),
+('Mobi', 'Cinza', '12345-5668', true, 2);
+
+select carros.modelo, carros.cor, tipos_carro.descricao from carros inner join tipos_carro on
+tipos_carro.id = carros.tipo_id;
+
+CREATE TABLE cidades (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(150) NOT NULL,
+    estado VARCHAR(2) NOT NULL,
+    codigo_ibge VARCHAR(10) UNIQUE
 );
 
 CREATE TABLE funcionario_enderecos (
@@ -48,6 +82,8 @@ CREATE TABLE funcoes (
     descricao TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+
+
 
 CREATE TABLE funcionario_funcoes (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -135,6 +171,7 @@ CREATE TABLE ordens_servico (
     cliente_id INT NOT NULL,
     obra_id INT NOT NULL,
     venda_id INT NULL,
+    carro_id INT NULL,
 
     data_emissao DATE NOT NULL,
     data_execucao DATE,
@@ -155,6 +192,7 @@ CREATE TABLE ordens_servico (
     FOREIGN KEY (cliente_id) REFERENCES clientes(id),
     FOREIGN KEY (obra_id) REFERENCES obras(id),
     FOREIGN KEY (venda_id) REFERENCES vendas(id),
+    FOREIGN KEY (carro_id) REFERENCES carros(id),
     FOREIGN KEY (responsavel_tecnico_id) REFERENCES funcionarios(id)
 );
 
@@ -163,7 +201,7 @@ CREATE TABLE relatorios_tecnicos (
     obra_id INT NOT NULL,
     ordem_servico_id INT NOT NULL,
     data_execucao DATE NOT NULL,
-    cidade VARCHAR(150),
+    cidade_id INT NOT NULL,
     descricao_servico TEXT,
     pendencias TEXT,
     avaliacao_ia TEXT,
@@ -173,7 +211,8 @@ CREATE TABLE relatorios_tecnicos (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 
     FOREIGN KEY (obra_id) REFERENCES obras(id),
-    FOREIGN KEY (ordem_servico_id) REFERENCES ordens_servico(id)
+    FOREIGN KEY (ordem_servico_id) REFERENCES ordens_servico(id),
+    FOREIGN KEY (cidade_id) REFERENCES cidades(id)
 );
 
 CREATE TABLE relatorio_funcionarios (
@@ -198,7 +237,8 @@ CREATE TABLE documentos (
 
     tipo_documento VARCHAR(100) NOT NULL,
     nome_arquivo VARCHAR(255) NOT NULL,
-    url_arquivo VARCHAR(500) NOT NULL,
+    storage_provider VARCHAR(50),
+    storage_key VARCHAR(500),
 
     mime_type VARCHAR(100),
     tamanho_bytes BIGINT,
@@ -298,6 +338,7 @@ CREATE TABLE obra_parceiros (
     FOREIGN KEY (obra_id) REFERENCES obras(id) ON DELETE CASCADE,
     FOREIGN KEY (parceiro_id) REFERENCES parceiros(id)
 );
+
 
 CREATE INDEX idx_doc_obra ON documentos(obra_id);
 CREATE INDEX idx_doc_venda ON documentos(venda_id);

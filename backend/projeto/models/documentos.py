@@ -12,7 +12,8 @@ class Documentos(db.Model):
     relatorio_id = db.Column(db.Integer, db.ForeignKey('relatorios_tecnicos.id'), nullable=True)
     tipo_documento = db.Column(db.String(100), nullable=False)
     nome_arquivo = db.Column(db.String(255), nullable=False)
-    url_arquivo = db.Column(db.String(500), nullable=False)
+    storage_provider = db.Column(db.String(50))  # s3, r2, gcs
+    storage_key = db.Column(db.String(500))      # caminho interno no bucket
     mime_type = db.Column(db.String(100))
     tamanho_bytes = db.Column(db.BigInteger)
     versao = db.Column(db.Integer, default=1)

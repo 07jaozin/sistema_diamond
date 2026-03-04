@@ -10,6 +10,7 @@ class OrdensServico(db.Model):
     cliente_id = db.Column(db.Integer, db.ForeignKey('clientes.id'), nullable=False)
     obra_id = db.Column(db.Integer, db.ForeignKey('obras.id'), nullable=False)
     venda_id = db.Column(db.Integer, db.ForeignKey('vendas.id'), nullable=True)
+    carro_id = db.Column(db.Integer, db.ForeignKey('carros.id'), nullable=True)
     data_emissao = db.Column(db.Date, nullable=False)
     data_execucao = db.Column(db.Date)
     tipo_servico = db.Column(db.String(100))
@@ -33,6 +34,7 @@ class OrdensServico(db.Model):
     relatorios_tecnicos = db.relationship('RelatoriosTecnicos', back_populates='ordem_servico', cascade='all, delete-orphan')
     documentos = db.relationship('Documentos', back_populates='ordem_servico', cascade='all, delete-orphan')
     itens = db.relationship('OrdemServicoItens', back_populates='ordem_servico', cascade='all, delete-orphan')
+    carro = db.relationship('Carro', foreign_keys=[carro_id], back_populates='ordens_servico')
 
     def to_dict(self):
         return {

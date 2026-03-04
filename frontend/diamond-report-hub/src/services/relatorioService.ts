@@ -1,5 +1,6 @@
 export interface RelatorioData {
-  cliente: string;
+  numero_os: string;
+  IDObra: string;
   equipe: string[];
   data_execucao: string;
   cidade: string;
@@ -13,28 +14,31 @@ export interface RelatorioData {
 export async function enviarRelatorio(dados: RelatorioData) {
   const formData = new FormData();
   
-  const jsonData = {
-    cliente: dados.cliente,
-    equipe: dados.equipe,
-    data_execucao: dados.data_execucao,
-    cidade: dados.cidade,
-    servico_executado: dados.servico_executado,
-    pendencias: dados.pendencias,
-    status: dados.status,
-    precisa_retornar: dados.precisa_retornar,
-    anexos: [] as string[],
-  };
+    // Campos simples (string)
+  formData.append("numero_os", dados.numero_os);
+  formData.append("id_obra", dados.IDObra);
+  formData.append("data_execucao", dados.data_execucao);
+  formData.append("cidade", dados.cidade);
+  formData.append("servico_executado", dados.servico_executado);
+  formData.append("pendencias", dados.pendencias);
+  formData.append("status", dados.status);
+  formData.append("precisa_retornar", dados.precisa_retornar);
 
+  // Array (equipe)
+  dados.equipe.forEach((membro) => {
+    formData.append("equipe", membro);
+  });
+
+  // Arquivos
+  console.log(dados.anexos)
   dados.anexos.forEach((file) => {
     formData.append("anexos", file);
   });
 
-  formData.append("dados", JSON.stringify(jsonData));
-
  
   
   // When you have a real API, uncomment below:
-  const response = await fetch("http://localhost:5678/webhook-test/9345ef9e-ebd0-4b1c-98ef-777bd762321d", {
+  const response = await fetch("http://127.0.0.1:5000/relatorios/n8n", {
     method: "POST",
     body: formData,
   });

@@ -8,6 +8,7 @@ class Funcionarios(db.Model):
     id = db.Column(db.Integer, primary_key = True, autoincrement = True)
     nome = db.Column(db.String(150), nullable = False)
     email = db.Column(db.String(150))
+    data_nascimento = db.Column(db.Date)
     ativo = db.Column(db.Boolean, default = True)
     created_at = db.Column(
         db.DateTime,

@@ -9,7 +9,7 @@ class RelatoriosTecnicos(db.Model):
     obra_id = db.Column(db.Integer, db.ForeignKey('obras.id'), nullable=False)
     ordem_servico_id = db.Column(db.Integer, db.ForeignKey('ordens_servico.id'), nullable=False)
     data_execucao = db.Column(db.Date, nullable=False)
-    cidade = db.Column(db.String(150))
+    cidade_id = db.Column(db.Integer, db.ForeignKey('cidades.id'), nullable=False)
     descricao_servico = db.Column(db.Text)
     pendencias = db.Column(db.Text)
     avaliacao_ia = db.Column(db.Text)
@@ -27,7 +27,7 @@ class RelatoriosTecnicos(db.Model):
     ordem_servico = db.relationship('OrdensServico', back_populates='relatorios_tecnicos')
     documentos = db.relationship('Documentos', back_populates='relatorio', cascade='all, delete-orphan')
     relatorio_funcionarios = db.relationship('RelatorioFuncionarios', back_populates='relatorio', cascade='all, delete-orphan')
-
+    cidade = db.relationship('Cidade', back_populates='relatorios')
     def to_dict(self):
         return {
             "id": self.id,
