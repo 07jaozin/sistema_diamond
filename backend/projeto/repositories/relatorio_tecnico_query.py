@@ -9,3 +9,8 @@ class RelatorioTecnicoQuery:
 
         return relatorio
 
+    @staticmethod
+    def query_listar_relatorios():
+        relatorios = RelatoriosTecnicos.query.all()
+        
+        return relatorios

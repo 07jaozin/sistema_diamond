@@ -13,15 +13,19 @@ import { toast } from "sonner";
 import { format } from "date-fns";
 import type { ServiceOrder, OSStatus, TechnicalReport, TeamMember } from "@/types";
 import { TEAM_MEMBERS } from "@/types";
+import { useServiceOrders } from "@/hooks/useServices";
 
 export default function ServiceOrders() {
-  const { serviceOrders, updateServiceOrderStatus, getReportByOS, addReport } = useData();
+  const {serviceOrders ,updateServiceOrderStatus, getReportByOS, addReport } = useData();
+  const { data: serviceOrderss = [], isLoading, error } = useServiceOrders();
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [teamFilter, setTeamFilter] = useState("all");
   const [detail, setDetail] = useState<ServiceOrder | null>(null);
   const [showReportForm, setShowReportForm] = useState<ServiceOrder | null>(null);
   const [reportTeam, setReportTeam] = useState<TeamMember[]>([]);
+
+
 
   const statuses: OSStatus[] = ["Aberta", "Em execução", "Finalizada", "Cancelada"];
 

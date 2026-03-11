@@ -4,6 +4,6 @@ class ClientesServices:
 
     @staticmethod
     def listar_clientes_service():
-        clientes = ClientesQuery.listar_clientes_query()
+        clientes = ClientesQuery.query_listar_clientes()
 
         return clientes

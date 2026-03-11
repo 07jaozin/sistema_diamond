@@ -40,6 +40,13 @@ export const TEAM_MEMBERS = [
 ] as const;
 
 export type TeamMember = (typeof TEAM_MEMBERS)[number];
+export interface Equipe {
+  id: number;
+  ordem_servico_id: number;
+  nome: string;
+
+
+};
 
 export interface ServiceOrder {
   id: string;
@@ -59,6 +66,24 @@ export interface ServiceOrder {
   createdAt: string;
   updatedAt: string;
   history: { date: string; action: string }[];
+}
+export interface OrdemServico {
+  id: string;
+  numero_os: number;
+  cliente_id: string;
+  cliente_nome: string;
+  obra_id: string;
+  carro_modelo: string;
+  carro_cor: string;
+  data_execucao: string;
+  descricao_servico: string;
+  observacoes_importantes: string;
+  equipamentos: string[];
+  equipe: Equipe[];
+  cidade: string;
+  endereco: string;
+  status: OSStatus;
+ 
 }
 
 export type ReportStatus = "Pendente" | "Concluído";
@@ -91,6 +116,15 @@ export interface ClientList {
   nome: string;
 }
 
+export interface ObrasList {
+  id: number;
+  cliente_id: number;
+  status: string;
+  descricao: string;
+  data_inicio: Date;
+
+}
+
 export interface CreateServiceOrderDTO {
     clientId: number;
     clientName: string;
@@ -100,13 +134,26 @@ export interface CreateServiceOrderDTO {
     description: string;
     considerations?: string;
     equipment?: string[];
-    team: TeamMember[];
+    team: number[];
     status: OSStatus;
+    etapa: string;
 }
 
+export interface Equipe {
+  id: number;
+  nome: string;
+  funcao: string;
+
+}
+
+
+
 export const PHASE_LABELS: Record<string, string> = {
-  phase1: "Fase 1 — Preparação",
-  phase2: "Fase 2 — Execução",
-  phase3: "Fase 3 — Acabamento",
+  phase1: "Fase 1 — Cabeamento",
+  phase2: "Fase 2 — Automação",
+  phase3: "Fase 3 — Instalação",
   phase4: "Fase 4 — Entrega",
+  phase5: "Manutenção",
 };
+
+

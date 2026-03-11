@@ -12,4 +12,4 @@ def listar_clientes():
         return jsonify(clientes), 200
     
     except Exception as e:
-        return jsonify({"erro": str(e)}), 400
+        return jsonify({"Erro inesperado internamente!": str(e)}), 500

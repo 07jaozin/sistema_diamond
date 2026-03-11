@@ -1,5 +1,5 @@
 from services.clientes_services import ClientesServices
-from DTOs.clienteResponseDTO import ClienteResponseDTO
+from DTOs.clientesDTOs.clienteResponseDTO import ClienteResponseDTO
 class ClientesController:
 
     @staticmethod

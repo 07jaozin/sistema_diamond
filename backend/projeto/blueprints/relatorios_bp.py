@@ -1,5 +1,6 @@
 from flask import jsonify, request, Blueprint
 from DTOs.relatorios_DTO import RelatoriosDTOs
+from controllers.relatorios_controller import RelatoriosController
 import requests
 from datetime import date
 
@@ -36,3 +37,17 @@ def registrar_n8n():
     except Exception as e:
         print(str(e))
         return jsonify({"erro": str(e)}), 400
+    
+@relatorios_bp.route('', methods=['GET'])
+def listar_relatorios():
+    try:
+        relatorios_tecnicos = RelatoriosController.listar_relatorios_controller()
+
+        return jsonify(relatorios_tecnicos), 200
+
+    except Exception as e:
+        print(str(e))
+        return jsonify({
+            "success": False,
+            "erro": str(e)
+        }), 400

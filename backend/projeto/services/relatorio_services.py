@@ -10,6 +10,14 @@ from repositories.relatorio_funcionario_query import RelatorioFuncionariosQuery 
 class RelatorioServices:
 
     @staticmethod
+    def listar_relatorios_service():
+        relatorios_tecnicos = RTQuery.query_listar_relatorios()
+
+        relatorios = [r.to_dict() for r in relatorios_tecnicos]
+
+        return relatorios
+
+    @staticmethod
     def adicionar_relatorio_service(relatorio_dict: dict, anexos):
         try:
             relatorio = RT(**relatorio_dict)

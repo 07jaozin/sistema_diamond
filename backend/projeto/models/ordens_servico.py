@@ -9,7 +9,6 @@ class OrdensServico(db.Model):
     numero_os = db.Column(db.String(50), nullable=False, unique=True)
     cliente_id = db.Column(db.Integer, db.ForeignKey('clientes.id'), nullable=False)
     obra_id = db.Column(db.Integer, db.ForeignKey('obras.id'), nullable=False)
-    venda_id = db.Column(db.Integer, db.ForeignKey('vendas.id'), nullable=True)
     carro_id = db.Column(db.Integer, db.ForeignKey('carros.id'), nullable=True)
     data_emissao = db.Column(db.Date, nullable=False)
     data_execucao = db.Column(db.Date)
@@ -29,20 +28,20 @@ class OrdensServico(db.Model):
     # Relationships
     cliente = db.relationship('Clientes', foreign_keys=[cliente_id])
     obra = db.relationship('Obras', back_populates='ordens_servico')
-    venda = db.relationship('Vendas', foreign_keys=[venda_id])
     responsavel_tecnico = db.relationship('Funcionarios', foreign_keys=[responsavel_tecnico_id])
     relatorios_tecnicos = db.relationship('RelatoriosTecnicos', back_populates='ordem_servico', cascade='all, delete-orphan')
     documentos = db.relationship('Documentos', back_populates='ordem_servico', cascade='all, delete-orphan')
     itens = db.relationship('OrdemServicoItens', back_populates='ordem_servico', cascade='all, delete-orphan')
     carro = db.relationship('Carro', foreign_keys=[carro_id], back_populates='ordens_servico')
-
+    equipe = db.relationship("Funcionarios", secondary="ordem_servico_funcionarios", backref="ordens_servico")
+    historico = db.relationship("HistoricoOrdemServico", back_populates="ordem_servico", cascade="all, delete-orphan", order_by="HistoricoOrdemServico.created_at")
+    auditorias = db.relationship("AuditoriaOrdemServico", back_populates="ordem_servico", cascade="all, delete-orphan", order_by="AuditoriaOrdemServico.created_at")
     def to_dict(self):
         return {
             "id": self.id,
             "numero_os": self.numero_os,
             "cliente_id": self.cliente_id,
             "obra_id": self.obra_id,
-            "venda_id": self.venda_id,
             "data_emissao": self.data_emissao,
             "data_execucao": self.data_execucao,
             "tipo_servico": self.tipo_servico,

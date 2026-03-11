@@ -49,3 +49,4 @@ export async function enviarRelatorio(dados: RelatorioData) {
 
   return { success: true, message: "Relatório enviado com sucesso" };
 }
+

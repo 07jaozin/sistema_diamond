@@ -17,3 +17,9 @@ class CarrosRepository:
         )
 
         return carros
+    
+    @staticmethod
+    def query_buscar_carro_id(id:int):
+        carro = Carro.query.get(id)
+
+        return carro

@@ -18,11 +18,15 @@ def init_app():
     from blueprints.carros_bp import carro_bp
     from blueprints.ordem_servico_bp import os_bp
     from blueprints.clientes_bp import clientes_bp
+    from blueprints.obras_bp import obras_bp
+    from blueprints.funcionarios_bp import funcionarios_bp
 
     app.register_blueprint(relatorios_bp, url_prefix='/relatorios')
     app.register_blueprint(os_bp, url_prefix='/ordem_servico')
     app.register_blueprint(carro_bp, url_prefix='/carros')
     app.register_blueprint(clientes_bp, url_prefix='/clientes')
+    app.register_blueprint(obras_bp, url_prefix='/obras')
+    app.register_blueprint(funcionarios_bp, url_prefix='/funcionarios')
 
 
 

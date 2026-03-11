@@ -1,4 +1,4 @@
-import { CarroList, OSStatus, TeamMember, ClientList } from "@/types";
+import { CarroList, OSStatus, TeamMember, ClientList, ObrasList, Equipe, ServiceOrder, OrdemServico } from "@/types";
 import { CreateServiceOrderDTO } from "@/types";
 
 
@@ -64,6 +64,21 @@ export async function listarCarros(): Promise<CarroList[]> {
     throw error;
   }
 }
+export async function listarOS(): Promise<OrdemServico[]> {
+  try {
+    const response = await apiCall<ListResponse<OrdemServico[]>>('/ordem_servico', {
+      method: 'GET'
+    });
+
+    console.log(response.data)
+
+    return response.data;
+
+  } catch (error: any) {
+    console.error('Erro ao listar as ordens de serviços:', error.message);
+    throw error;
+  }
+}
 
 export async function listarClientes(): Promise<ClientList[]>{
   try{
@@ -78,9 +93,22 @@ export async function listarClientes(): Promise<ClientList[]>{
     throw error;
   }
 }
-export async function listarObras(): Promise<ClientList[]>{
+export async function listarEquipeTecnica(): Promise<Equipe[]>{
   try{
-    const response = await apiCall<ListResponse<ClientList[]>>('/obras', {
+    const response = await apiCall<ListResponse<Equipe[]>>('/funcionarios/equipe_tecnica', {
+      method: 'GET'
+    });
+
+    return response.data;
+    
+  }catch (error: any) {
+    console.error('Erro ao listar clientes:', error.message);
+    throw error;
+  }
+}
+export async function listarObras(): Promise<ObrasList[]>{
+  try{
+    const response = await apiCall<ListResponse<ObrasList[]>>('/obras', {
       method: 'GET'
     });
 
@@ -118,6 +146,7 @@ export async function CreateServiceOrder(data: CreateServiceOrderDTO): Promise<A
     }
     
     formData.append('status', data.status);
+    formData.append('etapa', data.etapa)
 
     const response = await apiCall<ApiResponse>('/ordem_servico', {
       method: 'POST',
@@ -130,3 +159,4 @@ export async function CreateServiceOrder(data: CreateServiceOrderDTO): Promise<A
     throw error;
   }
 }
+

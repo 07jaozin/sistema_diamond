@@ -8,3 +8,4 @@ class RelatorioFuncionariosQuery:
         db.session.add(dados)
         
         return dados
+    

@@ -10,6 +10,7 @@ CREATE TABLE funcionarios (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     
 );
+alter table funcionarios add column data_nascimento DATE;
 
 CREATE TABLE tipos_carro (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -170,7 +171,6 @@ CREATE TABLE ordens_servico (
     numero_os VARCHAR(50) NOT NULL UNIQUE,
     cliente_id INT NOT NULL,
     obra_id INT NOT NULL,
-    venda_id INT NULL,
     carro_id INT NULL,
 
     data_emissao DATE NOT NULL,
@@ -191,10 +191,11 @@ CREATE TABLE ordens_servico (
 
     FOREIGN KEY (cliente_id) REFERENCES clientes(id),
     FOREIGN KEY (obra_id) REFERENCES obras(id),
-    FOREIGN KEY (venda_id) REFERENCES vendas(id),
     FOREIGN KEY (carro_id) REFERENCES carros(id),
     FOREIGN KEY (responsavel_tecnico_id) REFERENCES funcionarios(id)
 );
+
+
 
 CREATE TABLE relatorios_tecnicos (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -339,6 +340,19 @@ CREATE TABLE obra_parceiros (
     FOREIGN KEY (parceiro_id) REFERENCES parceiros(id)
 );
 
+CREATE TABLE ordem_servico_funcionarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    ordem_servico_id INT NOT NULL,
+    funcionario_id INT NOT NULL,
+
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (ordem_servico_id) REFERENCES ordens_servico(id) ON DELETE CASCADE,
+    FOREIGN KEY (funcionario_id) REFERENCES funcionarios(id),
+
+    UNIQUE (ordem_servico_id, funcionario_id)
+);
+
 
 CREATE INDEX idx_doc_obra ON documentos(obra_id);
 CREATE INDEX idx_doc_venda ON documentos(venda_id);
@@ -391,4 +405,12 @@ CREATE INDEX idx_os_status ON ordens_servico(status);
 CREATE INDEX idx_os_data_execucao ON ordens_servico(data_execucao);
 
 CREATE INDEX idx_os_itens_ordem ON ordem_servico_itens(ordem_servico_id);
+
+CREATE TABLE sequencias (
+    nome VARCHAR(50) PRIMARY KEY,
+    valor INT NOT NULL
+);
+INSERT INTO sequencias VALUES ('numero_os', 0);
+
+
 
