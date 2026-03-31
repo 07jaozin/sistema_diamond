@@ -1,6 +1,7 @@
 from extensions.extensoes import db
 from sqlalchemy.sql import func
-
+from zoneinfo import ZoneInfo
+from datetime import timezone
 
 class HistoricoOrdemServico(db.Model):
 
@@ -38,3 +39,23 @@ class HistoricoOrdemServico(db.Model):
     funcionario = db.relationship(
         "Funcionarios"
     )
+
+    def to_dict(self):
+        created_at = self.created_at
+
+        if created_at:
+            if created_at.tzinfo is None:
+                created_at = created_at.replace(tzinfo=timezone.utc)
+
+            created_at = created_at.astimezone(ZoneInfo("America/Sao_Paulo"))
+
+        
+        return {
+            "id": self.id,
+            "ordem_servico_id": self.ordem_servico_id,
+            "funcionario_id": self.funcionario_id,
+            "evento": self.evento,
+            "descricao": self.descricao,
+            "created_at": created_at if created_at else None,
+            "funcionario_nome": self.funcionario.nome if self.funcionario else None
+        }

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useData } from "@/contexts/DataContext";
 import { ArrowLeft } from "lucide-react";
+import { useParams } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -21,8 +22,12 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
 import { ChevronsUpDown, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useCreateServiceOrder } from "@/hooks/useServices";
+import { useCarros, useClientes, useObras, useEquipeTecnica } from "@/hooks/useServices";
 
 export default function CreateServiceOrder() {
+  
+  const createOrderMutation = useCreateServiceOrder();
   const navigate = useNavigate();
   const { clients, works, addServiceOrder } = useData();
   const [clientId, setClientId] = useState("");
@@ -33,70 +38,17 @@ export default function CreateServiceOrder() {
   const [carroId, setCarroId] = useState<string>("");
   const [openClient, setOpenClient] = useState(false);
   const [etapa, setEtapa] = useState("")
+  const {os_id} = useParams<{ os_id: string }>();
+  
 
   useEffect(() => {
     console.log(Number(workId))
   }, [workId])
 
-  // Configurando o React Query
-  const queryClient = useQueryClient();
-
-  // Mutation para o envio dp formulario para o servidor
-  const mutation = useMutation({
-    mutationFn: createServiceOrder,
-    onSuccess: () => {
-      toast.success("Ordem de Serviço criada com sucesso");
-      queryClient.invalidateQueries({ queryKey: ['ordens-servico'] });
-      navigate("/ordens-servico");
-    },
-    onError: (error: any) => {
-      toast.error(error.message || "Erro ao criar ordem de serviço");
-    }
-  });
-
-  const {
-    data: carros = [],
-    isLoading: IsLoadingCarros,
-    isError: IsErrorCarros
-  } = useQuery({
-    queryKey: ["carros"],
-    queryFn: listarCarros,
-    staleTime: 1000 * 60 * 5,
-    retry: 2,
-  });
-
-  const {
-    data: obras = [],
-    isLoading: IsLoadingObras,
-    isError: IsErrorObras
-  } = useQuery({
-    queryKey: ["Obras"],
-    queryFn: listarObras,
-    staleTime: 1000 * 60 * 5,
-    retry: 2,
-  });
-
-  const {
-    data: cliente = [],
-    isLoading: IsLoadingCliente,
-    isError: IsErrorCliente
-  } = useQuery({
-    queryKey: ["clientes"],
-    queryFn: listarClientes,
-    staleTime: 1000 * 60 * 5,
-    retry: 2,
-  });
-
-  const {
-    data: equipeTecnica = [],
-    isLoading: IsLoadingET,
-    isError: IsErrorET
-  } = useQuery({
-    queryKey: ["equipe_tecnica"],
-    queryFn: listarEquipeTecnica,
-    staleTime: 1000 * 60 * 5,
-    retry: 2,
-  });
+  const { data: carros = [], isError: IsErrorCarros } = useCarros();
+  const { data: obras = [], isError: IsErrorObras } = useObras();
+  const { data: cliente = [], isError: IsErrorCliente } = useClientes();
+  const { data: equipeTecnica = [], isError: IsErrorET } = useEquipeTecnica();
 
   useEffect(() => {
     if(IsErrorCarros){
@@ -138,7 +90,7 @@ export default function CreateServiceOrder() {
       status: "Aberta" as OSStatus,
       etapa: etapa,
     };
-    mutation.mutate(dto);
+    createOrderMutation.mutate(dto);
   };
 
   const toggleTeam = (memberId: number) => {

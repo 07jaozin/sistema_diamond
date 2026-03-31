@@ -1,5 +1,6 @@
 from extensions.extensoes import db
 from sqlalchemy.sql import func
+from datetime import datetime
 
 class OrdensServico(db.Model):
 
@@ -36,14 +37,15 @@ class OrdensServico(db.Model):
     equipe = db.relationship("Funcionarios", secondary="ordem_servico_funcionarios", backref="ordens_servico")
     historico = db.relationship("HistoricoOrdemServico", back_populates="ordem_servico", cascade="all, delete-orphan", order_by="HistoricoOrdemServico.created_at")
     auditorias = db.relationship("AuditoriaOrdemServico", back_populates="ordem_servico", cascade="all, delete-orphan", order_by="AuditoriaOrdemServico.created_at")
+    
     def to_dict(self):
         return {
             "id": self.id,
             "numero_os": self.numero_os,
             "cliente_id": self.cliente_id,
             "obra_id": self.obra_id,
-            "data_emissao": self.data_emissao,
-            "data_execucao": self.data_execucao,
+            "data_emissao": self.data_emissao.isoformat(),
+            "data_execucao": self.data_execucao.isoformat(),
             "tipo_servico": self.tipo_servico,
             "descricao_servico": self.descricao_servico,
             "status": self.status,
@@ -51,5 +53,5 @@ class OrdensServico(db.Model):
             "observacoes_importantes": self.observacoes_importantes,
             "informacoes_adicionais": self.informacoes_adicionais,
             "responsavel_tecnico_id": self.responsavel_tecnico_id,
-            "created_at": self.created_at
+            "created_at": self.created_at.isoformat()
         }

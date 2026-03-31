@@ -1,6 +1,8 @@
 from flask import Flask, request
 from config.config import Config
 from extensions.extensoes import db, cors, jwt
+#from dotenv import load_dotenv
+
 
 
 def init_app():
@@ -8,10 +10,11 @@ def init_app():
     app.config.from_object(Config)
     db.init_app(app)
     jwt.init_app(app)
+    #load_dotenv()
     cors(app, 
          supports_credentials=True, 
          resources={r"/*": {
-            "origins": ["http://localhost:5173","http://localhost:8080", "http://localhost:8081"]
+            "origins": ["http://localhost:5173","http://localhost:8080", "http://localhost:8081", "http://192.168.2.129:8080", "http://192.168.2.129:8080"]
     }})
 
     from blueprints.relatorios_bp import relatorios_bp
@@ -34,3 +37,5 @@ def init_app():
 
 app = init_app()
 
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=True)

@@ -164,6 +164,11 @@ CREATE TABLE enderecos (
     FOREIGN KEY (obra_id) REFERENCES obras(id)
         ON DELETE CASCADE
 );
+ALTER TABLE enderecos
+ADD COLUMN quadra VARCHAR(50),
+ADD COLUMN lote VARCHAR(50),
+ADD COLUMN observacoes TEXT;
+
 
 CREATE TABLE ordens_servico (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -411,6 +416,54 @@ CREATE TABLE sequencias (
     valor INT NOT NULL
 );
 INSERT INTO sequencias VALUES ('numero_os', 0);
+
+CREATE TABLE auditoria_ordens_servico (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+
+    ordem_servico_id INT NOT NULL,
+    funcionario_id INT NULL,
+
+    campo VARCHAR(100),
+    valor_antigo TEXT,
+    valor_novo TEXT,
+
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_auditoria_ordem_servico
+        FOREIGN KEY (ordem_servico_id)
+        REFERENCES ordens_servico(id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_auditoria_funcionario
+        FOREIGN KEY (funcionario_id)
+        REFERENCES funcionarios(id)
+);
+
+CREATE TABLE historico_ordens_servico (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+
+    ordem_servico_id INT NOT NULL,
+    funcionario_id INT NULL,
+
+    evento VARCHAR(100) NOT NULL,
+    descricao TEXT,
+
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_historico_ordem_servico
+        FOREIGN KEY (ordem_servico_id)
+        REFERENCES ordens_servico(id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_historico_funcionario
+        FOREIGN KEY (funcionario_id)
+        REFERENCES funcionarios(id)
+);
+CREATE INDEX idx_auditoria_os
+ON auditoria_ordens_servico(ordem_servico_id);
+
+CREATE INDEX idx_historico_os
+ON historico_ordens_servico(ordem_servico_id);
 
 
 

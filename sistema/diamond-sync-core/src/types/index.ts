@@ -28,7 +28,7 @@ export interface Work {
   updatedAt: string;
 }
 
-export type OSStatus = "Aberta" | "Em execução" | "Finalizada" | "Cancelada";
+export type OSStatus = "Aberta" | "Em execução" | "Finalizada" | "Cancelada" | "Emitida";
 
 export const TEAM_MEMBERS = [
   "João",
@@ -40,13 +40,7 @@ export const TEAM_MEMBERS = [
 ] as const;
 
 export type TeamMember = (typeof TEAM_MEMBERS)[number];
-export interface Equipe {
-  id: number;
-  ordem_servico_id: number;
-  nome: string;
 
-
-};
 
 export interface ServiceOrder {
   id: string;
@@ -55,6 +49,8 @@ export interface ServiceOrder {
   clientName: string;
   workId: string;
   carroId: string;
+  carroModel: string;
+  colorCar: string;
   executionDate: string;
   description: string;
   considerations: string;
@@ -67,22 +63,50 @@ export interface ServiceOrder {
   updatedAt: string;
   history: { date: string; action: string }[];
 }
+
+export interface Equipe {
+  id: number;
+  ordem_servico_id: number;
+  nome: string;
+};
+
+export interface Equipamentos {
+  ordem_servico_id: number;
+  item_numero: number;
+  descricao: string;
+  quantidade: number;
+  unidade: string;
+}
+
+export interface Historico {
+  id: number;
+  ordem_servico_id: number;
+  funcionario_id: number;
+  evento: string;
+  descricao: string;
+  created_at: string;
+  funcionario_nome: string;
+}
+
 export interface OrdemServico {
   id: string;
   numero_os: number;
   cliente_id: string;
   cliente_nome: string;
   obra_id: string;
+  carro_id: string | null;
   carro_modelo: string;
   carro_cor: string;
   data_execucao: string;
   descricao_servico: string;
   observacoes_importantes: string;
-  equipamentos: string[];
+  equipamentos: Equipamentos[];
   equipe: Equipe[];
   cidade: string;
   endereco: string;
   status: OSStatus;
+  historico: Historico[];
+  etapa: string;
  
 }
 
@@ -93,7 +117,7 @@ export interface TechnicalReport {
   osId: string;
   workId: string;
   clientName: string;
-  team: TeamMember[];
+  team: number[];
   executionDate: string;
   servicePerformed: string;
   pendencies: string;
@@ -135,7 +159,7 @@ export interface CreateServiceOrderDTO {
     considerations?: string;
     equipment?: string[];
     team: number[];
-    status: OSStatus;
+    status: string;
     etapa: string;
 }
 
@@ -156,4 +180,15 @@ export const PHASE_LABELS: Record<string, string> = {
   phase5: "Manutenção",
 };
 
-
+export interface RelatorioData {
+  numero_os: string;
+  IDObra: string;
+  equipe: string[];
+  data_execucao: string;
+  cidade: string;
+  servico_executado: string;
+  pendencias: string;
+  status: string;
+  precisa_retornar: string;
+  anexos: File[];
+}

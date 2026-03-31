@@ -3,7 +3,7 @@ import { CreateServiceOrderDTO } from "@/types";
 
 
 
-const API_BASE_URL = 'http://127.0.0.1:5000';
+const API_BASE_URL = 'http://192.168.2.129:5000';
 
 export interface ApiResponse {
   success: boolean;
@@ -70,12 +70,26 @@ export async function listarOS(): Promise<OrdemServico[]> {
       method: 'GET'
     });
 
-    console.log(response.data)
-
     return response.data;
 
   } catch (error: any) {
     console.error('Erro ao listar as ordens de serviços:', error.message);
+    throw error;
+  }
+}
+export async function buscarOSId(os_id: number): Promise<OrdemServico> {
+  try {
+    console.log("os_id_services: ", os_id)
+    const response = await apiCall<ListResponse<OrdemServico>>(`/ordem_servico/buscar_os_id/${os_id}`, {
+      method: 'GET'
+      
+    });
+
+    console.log("Response Data buscarOSId: " ,response.data)
+    return response.data;
+
+  } catch (error: any) {
+    console.error('Erro ao listar as ordem de serviço:', error.message);
     throw error;
   }
 }
@@ -160,3 +174,85 @@ export async function CreateServiceOrder(data: CreateServiceOrderDTO): Promise<A
   }
 }
 
+export async function UpdateServiceOrder(
+  os_id: number,
+  data: CreateServiceOrderDTO
+): Promise<ApiResponse> {
+  try {
+    
+
+    const response = await apiCall<ApiResponse>(`/ordem_servico/${os_id}`, {
+     method: 'PUT',
+     body: JSON.stringify({
+      client_id: data.clientId,
+      client_name: data.clientName,
+      work_id: data.workId,
+      carro_id: data.carroId,
+      data_execucao: data.executionDate,
+      descricao_servico: data.description,
+      observacoes_importantes: data.considerations,
+      equipamentos: data.equipment,
+      equipe: data.team,
+      status: data.status,
+      etapa: data.etapa,
+  }),
+    });
+
+    return response;
+    
+  } catch (error: any) {
+    console.error('Erro ao atualizar ordem de serviço:', error.message);
+    throw error;
+  }
+}
+
+export async function CancelarOS(os_id: number, motivo: string) {
+  try{
+    const response = await apiCall<ApiResponse>('/ordem_servico/cancelar',{
+      method: 'PUT',
+      body: JSON.stringify({
+        os_id: os_id,
+        evento: "Cancelamento",
+        observacao: motivo
+      })
+    })
+
+    return response
+
+  }catch (error: any) {
+    console.error('Erro ao listar clientes:', error.message);
+    throw error;
+  }
+}
+export async function ObservacaoOS(os_id: number, observacao: string) {
+  try{
+    const response = await apiCall<ApiResponse>('/ordem_servico/observacao',{
+      method: 'POST',
+      body: JSON.stringify({
+        os_id: os_id,
+        evento: "Observação",
+        observacao: observacao
+      })
+    })
+
+    return response
+
+  }catch (error: any) {
+    console.error('Erro ao listar clientes:', error.message);
+    throw error;
+  }
+}
+export async function enviarOS(os_id: number) {
+  try{
+    const response = await apiCall<ApiResponse>('/ordem_servico/enviar_os',{
+      method: 'POST',
+      body: JSON.stringify(os_id)
+    })
+
+    return response
+
+  }catch (error: any) {
+    console.error('Erro ao enviar a OS:', error.message);
+    throw error;
+  }
+}

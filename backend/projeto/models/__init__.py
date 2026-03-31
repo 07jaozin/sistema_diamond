@@ -11,7 +11,7 @@ from .vendas import Vendas
 from .obras import Obras
 from .enderecos import Enderecos
 
-from .historicoOrdemServico import HistoricoOrdemServico
+from .historico_ordem_servico import HistoricoOrdemServico
 from .auditoriaOrdemServico import AuditoriaOrdemServico
 
 from .ordens_servico import OrdensServico

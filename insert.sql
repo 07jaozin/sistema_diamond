@@ -50,7 +50,8 @@ INSERT INTO funcoes (nome, descricao) VALUES
  (8, 1, '2023-02-01'),
  (9, 1, '2023-02-01'),
  (10, 1, '2023-02-01'),
- (21, 5, '2023-02-01');
+ (21, 5, '2023-02-01'),
+ (6, 2, '2023-02-01');
  
  select funcionarios.nome, funcoes.nome from funcionarios 
  inner join funcionario_funcoes on 
@@ -155,3 +156,21 @@ INSERT INTO vendas (
 (2, 'Av. Empresarial, 1200', 'Centro Comercial Horizonte', 'Ribeirão Preto', 'SP', '14020-000'),
 
 (3, 'Rua João Batista, 78', NULL, 'São Carlos', 'SP', '13560-000');
+
+INSERT INTO historico_ordens_servico(ordem_servico_id, funcionario_id, evento, descricao) VALUES
+(3, 21, 'Criação da OS', 'Geração da OS'),
+(4, 21, 'Criação da OS', 'Geração da OS');
+
+
+INSERT INTO telefone_funcionario (funcionario_id, telefone, tipo, principal) VALUES
+(1, '(16) 99702-7779', 'celular', TRUE),
+(2, '(16) 99608-6281', 'celular', TRUE),
+(3, '(32 99835-2324', 'celular', TRUE),
+(4, '(16) 99724-6650', 'celular', TRUE),
+(5, '(16) 98818-7387', 'celular', TRUE),
+(6, '(16) 99729-6585', 'celular', TRUE),
+(7, '(16) 99111-1007', 'celular', TRUE),
+(8, '(16) 98238-0390', 'celular', TRUE),
+(9, '(16) 99132-0450', 'celular', TRUE),
+(10, '(16) 99343-0338', 'celular', TRUE),
+(21, '(16) 97401-1085', 'celular', TRUE);

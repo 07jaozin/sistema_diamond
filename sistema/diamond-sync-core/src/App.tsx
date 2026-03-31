@@ -12,7 +12,9 @@ import Works from "@/pages/Works";
 import WorkDetail from "@/pages/WorkDetail";
 import ServiceOrders from "@/pages/ServiceOrders";
 import CreateServiceOrder from "@/pages/CreateServiceOrder";
+import EditServiceOrder from "./pages/EditOrdemService";
 import NotFound from "./pages/NotFound";
+import ReportForm from "./pages/ReportForm";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +34,8 @@ const App = () => (
               <Route path="/obras/:id" element={<WorkDetail />} />
               <Route path="/ordens-servico" element={<ServiceOrders />} />
               <Route path="/ordens-servico/nova" element={<CreateServiceOrder />} />
+              <Route path="/ordens-servico/:os_id" element={<EditServiceOrder />} />
+              <Route path="/reportForm" element={<ReportForm/>} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </AppLayout>
