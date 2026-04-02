@@ -7,17 +7,12 @@ from sqlalchemy import select, text
 class FuncionariosRepository:
 
     @staticmethod
-    def query_listar_equipe_tecnica():
-        stmt = (
-            select(Funcionarios.id, Funcionarios.nome, Funcoes.nome)
-            .join(FuncionarioFuncoes, Funcionarios.id == FuncionarioFuncoes.funcionario_id)
-            .join(Funcoes, FuncionarioFuncoes.funcao_id == Funcoes.id)
-            .filter(Funcoes.id.in_([2,3]))
-        )
+    def query_adicionar_funcionario(dados: Funcionarios):
+        db.session.add(dados)
 
-        resultado = db.session.execute(stmt).all()
+        return dados
 
-        return resultado
+    
     
     @staticmethod
     def query_buscar_funcionario_id(id: int):

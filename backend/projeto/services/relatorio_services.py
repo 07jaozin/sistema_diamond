@@ -5,7 +5,7 @@ from models.obras import Obras
 from repositories.obras_querys import ObrasRepository as ObraQuery
 from repositories.relatorio_tecnico_query import RelatorioTecnicoQuery as RTQuery
 from repositories.ordem_servico_query import OrdemServicoRepository as OSQuery
-from repositories.relatorio_funcionario_query import RelatorioFuncionariosQuery as RTFuncionarioQuery
+from backend.projeto.repositories.funcionarios.relatorio_funcionario_query import RelatorioFuncionariosQuery as RTFuncionarioQuery
 
 class RelatorioServices:
 

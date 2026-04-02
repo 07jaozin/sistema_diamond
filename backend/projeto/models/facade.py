@@ -6,7 +6,6 @@ from .funcionarios import Funcionarios
 from .funcoes import Funcoes
 from .historico_ordem_servico import HistoricoOrdemServico
 from .sequencias import Sequencia
-from .auditoriaOrdemServico import AuditoriaOrdemServico
 from .relatorios_tecnicos import RelatoriosTecnicos
 from .relatorio_funcionarios import RelatorioFuncionarios
 from .parceiros import Parceiros
@@ -23,6 +22,10 @@ from .funcionario_funcoes import FuncionarioFuncoes
 from .ordem_servico_funcionario import OrdemServicoFuncionario
 from .ordem_servico_itens import OrdemServicoItens
 from .telefone_funcionario import TelefoneFuncionario
+from .usuarios import Usuarios
+from .permissoes import Permissoes
+from .funcao_permissoes import FuncaoPermissoes
+from .logs_sistema import LogsSistema
 
 
 class Models:
@@ -35,7 +38,6 @@ class Models:
     funcoes = Funcoes
     historico_os = HistoricoOrdemServico
     sequencias = Sequencia
-    auditoria = AuditoriaOrdemServico
     relatorios_tecnicos = RelatoriosTecnicos
     relatorio_funcionarios = RelatorioFuncionarios
     parceiros = Parceiros
@@ -52,4 +54,8 @@ class Models:
     ordem_servico_funcionario = OrdemServicoFuncionario
     ordem_servico_itens = OrdemServicoItens
     telefone_funcionario = TelefoneFuncionario
+    usuarios = Usuarios
+    permissoes = Permissoes
+    funcao_permissoes = FuncaoPermissoes
+    logs_sistema = LogsSistema
 

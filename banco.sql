@@ -358,6 +358,68 @@ CREATE TABLE ordem_servico_funcionarios (
     UNIQUE (ordem_servico_id, funcionario_id)
 );
 
+CREATE TABLE usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    funcionario_id INT NOT NULL,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    senha_hash VARCHAR(255) NOT NULL,
+    ativo BOOLEAN DEFAULT TRUE,
+    ultimo_login DATETIME,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (funcionario_id) REFERENCES funcionarios(id)
+);
+
+CREATE TABLE permissoes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    descricao TEXT
+);
+
+CREATE TABLE funcao_permissoes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    funcao_id INT NOT NULL,
+    permissao_id INT NOT NULL,
+
+    FOREIGN KEY (funcao_id) REFERENCES funcoes(id),
+    FOREIGN KEY (permissao_id) REFERENCES permissoes(id)
+);
+
+CREATE TABLE logs_sistema (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT,
+    acao VARCHAR(255),
+    entidade VARCHAR(100),
+    entidade_id INT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);
+
+CREATE UNIQUE INDEX idx_usuarios_email ON usuarios(email);
+CREATE INDEX idx_usuarios_funcionario_id ON usuarios(funcionario_id);
+CREATE INDEX idx_usuarios_ativo ON usuarios(ativo);
+CREATE INDEX idx_usuarios_email_ativo ON usuarios(email, ativo);
+
+CREATE UNIQUE INDEX idx_permissoes_nome ON permissoes(nome);
+
+
+CREATE INDEX idx_fp_funcao_id ON funcao_permissoes(funcao_id);
+CREATE INDEX idx_fp_permissao_id ON funcao_permissoes(permissao_id);
+
+CREATE UNIQUE INDEX idx_fp_funcao_permissao 
+ON funcao_permissoes(funcao_id, permissao_id);
+
+
+CREATE INDEX idx_logs_usuario_id ON logs_sistema(usuario_id);
+
+CREATE INDEX idx_logs_entidade ON logs_sistema(entidade);
+
+CREATE INDEX idx_logs_entidade_id ON logs_sistema(entidade_id);
+
+CREATE INDEX idx_logs_created_at ON logs_sistema(created_at);
+
+CREATE INDEX idx_logs_usuario_data ON logs_sistema(usuario_id, created_at);
 
 CREATE INDEX idx_doc_obra ON documentos(obra_id);
 CREATE INDEX idx_doc_venda ON documentos(venda_id);
@@ -417,27 +479,6 @@ CREATE TABLE sequencias (
 );
 INSERT INTO sequencias VALUES ('numero_os', 0);
 
-CREATE TABLE auditoria_ordens_servico (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-
-    ordem_servico_id INT NOT NULL,
-    funcionario_id INT NULL,
-
-    campo VARCHAR(100),
-    valor_antigo TEXT,
-    valor_novo TEXT,
-
-    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT fk_auditoria_ordem_servico
-        FOREIGN KEY (ordem_servico_id)
-        REFERENCES ordens_servico(id)
-        ON DELETE CASCADE,
-
-    CONSTRAINT fk_auditoria_funcionario
-        FOREIGN KEY (funcionario_id)
-        REFERENCES funcionarios(id)
-);
 
 CREATE TABLE historico_ordens_servico (
     id INT AUTO_INCREMENT PRIMARY KEY,

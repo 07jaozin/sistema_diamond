@@ -1,6 +1,6 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { LayoutDashboard, Users, Building2, ClipboardList, Menu, X, Diamond } from "lucide-react";
-import { useState } from "react";
+import { LayoutDashboard, Users, Building2, ClipboardList, PenBoxIcon, Menu, X, Diamond, Sun, MoonIcon } from "lucide-react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navItems = [
@@ -8,11 +8,33 @@ const navItems = [
   { to: "/clientes", label: "Clientes", icon: Users },
   { to: "/obras", label: "Obras", icon: Building2 },
   { to: "/ordens-servico", label: "Ordens de Serviço", icon: ClipboardList },
+  { to: "/reportForm", label: "Registrar Relatórios", icon: PenBoxIcon },
 ];
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isDark, setIsDark] = useState(false);
+
+  const toggleTheme = () => {
+    const html = document.documentElement;
+
+    html.classList.toggle("dark");
+
+    const isDark = html.classList.contains("dark");
+    setIsDark(isDark)
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+  };
+
+  useEffect(() => {
+    const theme = localStorage.getItem("theme");
+
+    if (theme === "dark") {
+      setIsDark(true);
+      document.documentElement.classList.add("dark");
+    }
+  },[])
+
   const location = useLocation();
 
   return (
@@ -64,8 +86,15 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             );
           })}
         </nav>
-
+        
         {/* Collapse toggle (desktop) */}
+        <button
+          onClick={toggleTheme}
+          className="hidden lg:flex items-center justify-center h-12 border-t border-sidebar-border text-sidebar-muted hover:text-sidebar-foreground transition-colors"
+        >
+          {isDark ? <Sun className="h-4 w-4" /> : <MoonIcon className="h-4 w-4" />}
+          
+        </button>
         <button
           onClick={() => setCollapsed(!collapsed)}
           className="hidden lg:flex items-center justify-center h-12 border-t border-sidebar-border text-sidebar-muted hover:text-sidebar-foreground transition-colors"
@@ -77,12 +106,19 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       {/* Main */}
       <div className={`flex-1 transition-all duration-300 ${collapsed ? "lg:ml-[68px]" : "lg:ml-[260px]"}`}>
         {/* Top bar mobile */}
-        <header className="lg:hidden sticky top-0 z-30 h-14 bg-background/80 backdrop-blur-md border-b border-border flex items-center px-4 gap-3">
+        <header className="lg:hidden sticky top-0 z-30 h-14 bg-background/80 backdrop-blur-md border-b border-border flex items-center justify-between px-4 gap-3">
+                
           <button onClick={() => setMobileOpen(true)} className="text-foreground">
             <Menu className="h-5 w-5" />
           </button>
-          <Diamond className="h-5 w-5" />
-          <span className="font-bold tracking-wide">DIAMOND</span>
+          
+          <button
+            onClick={toggleTheme}
+            className="lg:flex items-center justify-center h-12  text-sidebar-muted hover:text-sidebar-foreground transition-colors"
+          >
+            {isDark ? <Sun className="h-4 w-4" /> : <MoonIcon className="h-4 w-4" />}
+          
+          </button>
         </header>
 
         <main className="p-4 md:p-8 max-w-[1400px] mx-auto">

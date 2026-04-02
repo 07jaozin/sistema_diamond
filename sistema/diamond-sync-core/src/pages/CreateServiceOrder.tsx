@@ -99,7 +99,7 @@ export default function CreateServiceOrder() {
   };
 
   return (
-    <div className="space-y-6 max-w-2xl">
+    <div className="space-y-6 max-w-2xl ">
       <Link to="/ordens-servico" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
         <ArrowLeft className="h-4 w-4" /> Voltar
       </Link>

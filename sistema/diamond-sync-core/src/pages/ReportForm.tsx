@@ -16,15 +16,6 @@ import FileUpload from "@/components/relatorioForm/FileUpload";
 import SuccessScreen from "@/components/relatorioForm/SucessScreen";
 import { RelatorioData } from "@/types";
 
-const EQUIPE_OPTIONS = [
-  "João",
-  "Gabriel",
-  "Vinicius",
-  "Mauricio",
-  "Patrick",
-  "Raimundo",
-];
-
 const CIDADE_OPTIONS = ["Araraquara", "São Carlos", "Ibitinga"];
 
 interface FormErrors {
@@ -127,21 +118,10 @@ const ReportForm = () => {
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4 py-10">
-      <div className="w-full max-w-2xl gradient-card rounded-2xl border border-black shadow-2xl shadow-black overflow-hidden">
+      <div className="w-full max-w-2xl gradient-card rounded-2xl border shadow-custom overflow-hidden">
         {/* Header */}
         <div className="px-8 pt-8 pb-6 border-b border-border">
-          <div className="flex justify-between items-center gap-3 mb-1">
-            <img className="w-44" src="https://res.cloudinary.com/dcdfpnnyp/image/upload/v1770139865/Sem_t%C3%ADtulo-removebg-preview_tmvrmd.png" alt="" />
-            <div className="flex flex-col">
-                <span className="text-lg font-medium tracking-wider text-black uppercase">
-                    Diamond Automações
-                </span>
-                <span className="text-xs text-center font-extralight tracking-wider text-muted-foreground uppercase">
-                    tecnologia audiovisual
-                </span>
-            </div>
-            
-          </div>
+          
           <h1 className="text-2xl font-semibold text-foreground mt-4">
             Relatório Técnico
           </h1>
@@ -171,69 +151,6 @@ const ReportForm = () => {
             />
             </FieldWrapper>
 
-            <FieldWrapper label="ID da Obra" icon={<User className="w-4 h-4" />} error={errors.IDObra}>
-              <input
-                type="text"
-                value={IDObra}
-                onChange={(e) => {
-                  setIDObra(e.target.value);
-                  clearError("ID da Obra");
-                }}
-                placeholder="ID da Obra"
-                className="form-input"
-            />
-            </FieldWrapper>
-          </div>
-
-          {/* Equipe */}
-          <FieldWrapper label="Equipe que executou o serviço" icon={<Users className="w-4 h-4" />} error={errors.equipe}>
-            <div className="flex flex-wrap gap-2">
-              {EQUIPE_OPTIONS.map((name) => (
-                <button
-                  key={name}
-                  type="button"
-                  onClick={() => toggleEquipe(name)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-150 border ${
-                    equipe.includes(name)
-                      ? "bg-foreground text-primary-foreground border-foreground"
-                      : "bg-transparent text-muted-foreground border-border hover:border-foreground/30 hover:text-foreground"
-                  }`}
-                >
-                  {name}
-                </button>
-              ))}
-            </div>
-          </FieldWrapper>
-
-          {/* Data + Cidade */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <FieldWrapper label="Data de execução" icon={<Calendar className="w-4 h-4" />} error={errors.dataExecucao}>
-              <input
-                type="date"
-                value={dataExecucao}
-                onChange={(e) => {
-                  setDataExecucao(e.target.value);
-                  clearError("dataExecucao");
-                }}
-                className="form-input"
-              />
-            </FieldWrapper>
-
-            <FieldWrapper label="Cidade" icon={<MapPin className="w-4 h-4" />} error={errors.cidade}>
-              <select
-                value={cidade}
-                onChange={(e) => {
-                  setCidade(e.target.value);
-                  clearError("cidade");
-                }}
-                className="form-input"
-              >
-                <option value="">Selecione</option>
-                {CIDADE_OPTIONS.map((c) => (
-                  <option key={c} value={c}>{c}</option>
-                ))}
-              </select>
-            </FieldWrapper>
           </div>
 
           {/* Serviço Executado */}
