@@ -23,6 +23,10 @@ export const clientesKeys = {
   all: ["clientes"] as const,
 };
 
+export const funcoesKeys = {
+  all: ["funcoes"] as const,
+};
+
 export const equipeKeys = {
   all: ["equipe_tecnica"] as const,
 };

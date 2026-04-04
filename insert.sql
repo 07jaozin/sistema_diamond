@@ -1,20 +1,4 @@
-insert into funcionarios( nome, email, ativo, data_nascimento) values 
-('Mauricio', 'mauricio.m@gmail.com', true, '1988-02-03'),
-('Gabriel', 'gabriel.m@gmail.com', true, '2006-02-03'),
-('Patrick', 'patrick.m@gmail.com', true, '1990-02-03'),
-('Vinicius', 'vinicius.m@gmail.com', true, '2000-02-03'),
-('Lucas', 'Lucas.m@gmail.com', true, '2004-02-03'),
-('João Victor', 'joaovictorvalentim.m@gmail.com', true, '2007-02-13'),
-('Neto', 'neto.m@gmail.com', true, '1988-02-03'),
-('Mariana', 'mariana.m@gmail.com', true, '2006-02-03'),
-('André', 'andre.m@gmail.com', true, '1976-02-03'),
-('Jessica', 'jessica@gmail.com', true, '1989-01-23'),
-('Dener', 'dener.m@gmail.com', true, '1990-02-03');
 
-
-
-
-select * from funcionarios;
 
 INSERT INTO funcoes (nome, descricao) VALUES
 ('Vendedor',
@@ -49,8 +33,7 @@ INSERT INTO funcoes (nome, descricao) VALUES
  (7, 1, '2023-02-01'),
  (8, 1, '2023-02-01'),
  (9, 1, '2023-02-01'),
- (10, 1, '2023-02-01'),
- (21, 5, '2023-02-01'),
+ (10, 5, '2023-02-01'),
  (6, 2, '2023-02-01');
  
  select funcionarios.nome, funcoes.nome from funcionarios 
@@ -157,9 +140,6 @@ INSERT INTO vendas (
 
 (3, 'Rua João Batista, 78', NULL, 'São Carlos', 'SP', '13560-000');
 
-INSERT INTO historico_ordens_servico(ordem_servico_id, funcionario_id, evento, descricao) VALUES
-(3, 21, 'Criação da OS', 'Geração da OS'),
-(4, 21, 'Criação da OS', 'Geração da OS');
 
 
 INSERT INTO telefone_funcionario (funcionario_id, telefone, tipo, principal) VALUES
@@ -172,5 +152,5 @@ INSERT INTO telefone_funcionario (funcionario_id, telefone, tipo, principal) VAL
 (7, '(16) 99111-1007', 'celular', TRUE),
 (8, '(16) 98238-0390', 'celular', TRUE),
 (9, '(16) 99132-0450', 'celular', TRUE),
-(10, '(16) 99343-0338', 'celular', TRUE),
-(21, '(16) 97401-1085', 'celular', TRUE);
+(11, '(16) 99343-0338', 'celular', TRUE),
+(10, '(16) 97401-1085', 'celular', TRUE);

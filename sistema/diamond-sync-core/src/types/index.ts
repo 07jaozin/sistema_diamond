@@ -10,6 +10,37 @@ export interface Client {
   createdAt: string;
 }
 
+export interface Funcao {
+  id: number;
+  nome: string;
+}
+
+export interface UserRegistrationData {
+  // Step 1 - Basic Info
+  nome: string;
+  email: string;
+  senha: string;
+  confirmar_senha: string;
+  telefone: string;
+  foto_perfil?: File;
+  
+  // Step 2 - Personal Data
+  data_nascimento: string;
+  cep: string;
+  rua: string;
+  numero: number;
+  complemento: number;
+  bairro: string;
+  cidade: string;
+  estado: string;
+  ativo: boolean;
+  
+  // Step 3 - Sport Profile
+  funcao_id: number;
+  data_inicio: string;
+  observacao: string;
+}
+
 export interface Work {
   id: string;
   clientId: string;

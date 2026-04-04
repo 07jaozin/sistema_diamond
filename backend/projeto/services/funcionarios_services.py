@@ -1,7 +1,7 @@
 from repositories.facade import Repositories as Repo
 from typing import Dict, Any, List
 from .funcionarios.facade import FuncionarioServices as FS
-from usuarios.usuario_service import cri
+from .usuarios.usuario_service import UsuarioService as US
 from extensions.extensoes import db
 from werkzeug.security import generate_password_hash
 

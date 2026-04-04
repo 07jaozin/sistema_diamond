@@ -36,7 +36,6 @@ class OrdensServico(db.Model):
     carro = db.relationship('Carro', foreign_keys=[carro_id], back_populates='ordens_servico')
     equipe = db.relationship("Funcionarios", secondary="ordem_servico_funcionarios", backref="ordens_servico")
     historico = db.relationship("HistoricoOrdemServico", back_populates="ordem_servico", cascade="all, delete-orphan", order_by="HistoricoOrdemServico.created_at")
-    auditorias = db.relationship("AuditoriaOrdemServico", back_populates="ordem_servico", cascade="all, delete-orphan", order_by="AuditoriaOrdemServico.created_at")
     
     def to_dict(self):
         return {

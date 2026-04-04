@@ -1,8 +1,8 @@
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
-import { listarOS, listarEquipeTecnica, CancelarOS, ObservacaoOS, enviarOS, CreateServiceOrder, UpdateServiceOrder, listarCarros, listarObras, listarClientes, buscarOSId } from "@/services/auth.services";
+import { listarOS, listarEquipeTecnica, CancelarOS, ObservacaoOS, enviarOS, CreateServiceOrder, UpdateServiceOrder, listarCarros, listarObras, listarClientes, buscarOSId, listarFuncoes } from "@/services/auth.services";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
-import { serviceOrderKeys, equipeKeys, carrosKeys, obrasKeys, clientesKeys } from "@/services/keys";
+import { serviceOrderKeys, equipeKeys, carrosKeys, obrasKeys, clientesKeys, funcoesKeys } from "@/services/keys";
 import { number } from "framer-motion";
 
 export function useServiceOrders() {
@@ -43,6 +43,16 @@ export function useClientes() {
   return useQuery({
     queryKey: clientesKeys.all,
     queryFn: listarClientes,
+    staleTime: 1000 * 60 * 5,
+    retry: 2,
+  });
+}
+
+
+export function useFuncoes() {
+  return useQuery({
+    queryKey: ['funcoes'],
+    queryFn: listarFuncoes,
     staleTime: 1000 * 60 * 5,
     retry: 2,
   });

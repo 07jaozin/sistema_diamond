@@ -16,6 +16,7 @@ class Funcoes(db.Model):
 
     # Relationships
     funcionarios = db.relationship('FuncionarioFuncoes', back_populates='funcao', cascade='all, delete-orphan')
+    funcao_permissoes = db.relationship("FuncaoPermissoes", back_populates="funcao")
 
     def to_dict(self):
         return {

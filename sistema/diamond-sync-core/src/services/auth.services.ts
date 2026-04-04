@@ -1,9 +1,9 @@
-import { CarroList, OSStatus, TeamMember, ClientList, ObrasList, Equipe, ServiceOrder, OrdemServico } from "@/types";
+import { CarroList, OSStatus, TeamMember, ClientList, ObrasList, Equipe, ServiceOrder, OrdemServico, Funcao } from "@/types";
 import { CreateServiceOrderDTO } from "@/types";
 
 
 
-const API_BASE_URL = 'http://192.168.2.140:5000';
+const API_BASE_URL = 'http://192.168.15.85:5000';
 
 export interface ApiResponse {
   success: boolean;
@@ -253,6 +253,19 @@ export async function enviarOS(os_id: number) {
 
   }catch (error: any) {
     console.error('Erro ao enviar a OS:', error.message);
+    throw error;
+  }
+}
+
+export async function listarFuncoes(): Promise<Funcao[]>{
+  try{
+    const response = await apiCall<ListResponse<Funcao[]>>('/funcoes', {
+      method: 'GET'
+    });
+
+    return response.data;
+  }catch (error: any) {
+    console.error('Erro ao listar funcoes:', error.message);
     throw error;
   }
 }

@@ -10,10 +10,12 @@ from .funcionarios.usuarios_querys import UsuarioRepository
 from .funcionarios.funcionarios_funcoes import FuncionariosFuncoesRepository
 from .funcionarios.tel_funcionario_query import TelFuncionariosRepository
 from .funcionarios.funcionario_endereco_query import FuncionarioEnderecoRepository
-from .funcoes_query import FuncoesRepository
+from .relatorio_tecnico_query import RelatorioTecnicoRepository
+
 
 class Repositories:
-    
+    """Central registry for all repository classes."""
+
     clientes = ClientesRepository
     obras = ObrasRepository
     carros = CarrosRepository
@@ -26,4 +28,8 @@ class Repositories:
     sequencias = SequenciasRepository
     historico = HistoricoOSRepository
     usuario = UsuarioRepository
-    funcoes = FuncoesRepository
+    relatorio_tecnico = RelatorioTecnicoRepository
+
+
+__all__ = ['Repositories']
+

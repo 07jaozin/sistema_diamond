@@ -136,7 +136,7 @@ def detalhes_os():
 def observacao_os():
     try:
         dados = request.get_json(silent=True)
-        dto = HistoricoOSRequest(dados, 21).to_dict()
+        dto = HistoricoOSRequest(dados, 10).to_dict()
 
         observacao_controller = OSController.observacao_os_controller(dto)
 
@@ -160,7 +160,7 @@ def observacao_os():
 def cancelar_os():
     try:
         dados = request.get_json(silent=True)
-        dto = HistoricoOSRequest(dados, 21).to_dict()
+        dto = HistoricoOSRequest(dados, 10).to_dict()
 
         data_os_atualizada = OSController.cancelar_os_controller(dto)
 
@@ -183,7 +183,7 @@ def cancelar_os():
 def status_enviar_os():
     try:
         dados = request.get_json(silent=True)
-        dto = HistoricoOSRequest(dados, 21).to_dict()
+        dto = HistoricoOSRequest(dados, 10).to_dict()
 
         data_os_atualizada = OSController.enviar_status_os_controller(dto)
 

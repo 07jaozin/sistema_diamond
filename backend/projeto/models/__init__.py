@@ -12,7 +12,6 @@ from .obras import Obras
 from .enderecos import Enderecos
 
 from .historico_ordem_servico import HistoricoOrdemServico
-from .auditoriaOrdemServico import AuditoriaOrdemServico
 
 from .ordens_servico import OrdensServico
 
@@ -46,6 +45,5 @@ __all__ = [
     'ParceiroContatos',
     'VendaParceiros',
     'ObraParceiros',
-    'AuditoriaOrdemServico',
     'HistoricoOrdemServico'
 ]

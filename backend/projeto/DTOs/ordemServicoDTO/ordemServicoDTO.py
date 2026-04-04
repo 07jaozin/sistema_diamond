@@ -46,5 +46,5 @@ class OrdemServicoDTO:
             "equipe": self.form_data.get("equipe", []),
             "status": self.form_data.get("status").strip().capitalize(),
             "tipo_servico": self.form_data.get("etapa"),
-            "responsavel_tecnico_id": 21 # Mudar depois 
+            "responsavel_tecnico_id": 10 # Mudar depois 
         }

@@ -14,7 +14,7 @@ def init_app():
     cors(app, 
          supports_credentials=True, 
          resources={r"/*": {
-            "origins": ["http://localhost:5173","http://localhost:8080", "http://localhost:8081", "http://192.168.2.129:8080", "http://192.168.2.129:8080"]
+            "origins": ["http://localhost:5173","http://localhost:8080", "http://localhost:8081", "http://192.168.15.85:8080"]
     }})
 
     from blueprints.relatorios_bp import relatorios_bp
@@ -23,11 +23,13 @@ def init_app():
     from blueprints.clientes_bp import clientes_bp
     from blueprints.obras_bp import obras_bp
     from blueprints.funcionarios_bp import funcionarios_bp
+    from blueprints.funcoes_bp import funcoes_bp
 
     app.register_blueprint(relatorios_bp, url_prefix='/relatorios')
     app.register_blueprint(os_bp, url_prefix='/ordem_servico')
     app.register_blueprint(carro_bp, url_prefix='/carros')
     app.register_blueprint(clientes_bp, url_prefix='/clientes')
+    app.register_blueprint(funcoes_bp, url_prefix='/funcoes')
     app.register_blueprint(obras_bp, url_prefix='/obras')
     app.register_blueprint(funcionarios_bp, url_prefix='/funcionarios')
 

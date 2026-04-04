@@ -13,7 +13,7 @@ class Config:
 
     SQLALCHEMY_DATABASE_URI = os.getenv(
         "DATABASE_URL",
-        "mysql+pymysql://root:105192119@localhost:3306/diamond"
+        "mysql+pymysql://root:root@localhost:3306/diamond"
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 

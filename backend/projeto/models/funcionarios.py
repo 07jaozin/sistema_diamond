@@ -20,6 +20,7 @@ class Funcionarios(db.Model):
     enderecos = db.relationship('FuncionarioEnderecos', back_populates='funcionario', cascade='all, delete-orphan')
     telefones = db.relationship('TelefoneFuncionario', back_populates='funcionario', cascade='all, delete-orphan')
     funcoes = db.relationship('FuncionarioFuncoes', back_populates='funcionario', cascade='all, delete-orphan')
+    usuarios = db.relationship("Usuarios", back_populates="funcionario")
 
     def to_dict(self):
         return {
